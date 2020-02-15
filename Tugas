@@ -1,0 +1,85 @@
+## Apa itu Komponen?
+
+Komponen mandiri, mikro-entitas independen yang menjelaskan bagian dari UI. Sebuah aplikasi UI dapat dibagi menjadi lebih kecil komponen, dimana setiap komponen memiliki kode, struktur, dan API.
+## Alat peraga
+Komponen perlu data untuk bekerja dengan. Ada dua cara yang berbeda bahwa Anda bisa menggabungkan komponen dan data: sebagai **props** atau **state**. alat peraga dan negara menentukan apa komponen menuliskan dan bagaimana berperilaku.
+
+### props
+
+Jika komponen polos fungsi JavaScript, maka alat peraga akan fungsi input. Going oleh analogi, komponen menerima input (apa yang kita sebut alat peraga), proses itu, dan kemudian menuliskan beberapa kode BEJ.
+![Stateful vs Stateless Component Component with props](https://cms-assets.tutsplus.com/uploads/users/1795/posts/29541/image/Stateful-vs-Stateless-Component-Tutorial-Component-with-prop.jpg)
+bereaksi filsafat adalah bahwa alat peraga harus berubah dan top-down. Apa ini berarti adalah bahwa komponen orangtua dapat meneruskan data apapun yang diinginkan untuk anak-anak sebagai alat peraga, tetapi anak komponen tidak dapat mengubah alat peraga nya. Jadi, jika Anda mencoba untuk mengedit alat peraga seperti yang saya lakukan di bawah ini, Anda akan mendapatkan "tidak dapat menetapkan untuk read-only" TypeError.
+
+### State
+
+Negara, di sisi lain, adalah sebuah objek yang dimiliki oleh komponen mana dinyatakan. Lingkup dibatasi ke komponen saat ini. Komponen dapat menginisialisasi keadaan dan update setiap kali diperlukan. Keadaan komponen orangtua biasanya berakhir menjadi alat peraga komponen anak. Ketika negara adalah melewati lingkup saat ini, kami menyebutnya sebagai penyangga.
+  
+![Stateful vs Stateless Component Component with State](https://cms-assets.tutsplus.com/uploads/users/1795/posts/29541/image/Stateful-vs-Stateless-Component-Tutorial-Component-with-state.jpg)
+
+### Komponen fungsional
+
+Komponen fungsional yang hanya fungsi JavaScript. Mereka mengambil input opsional yang, seperti yang saya sebutkan sebelumnya, adalah apa yang kita sebut alat peraga.
+
+    import React from 'react';
+	const Hello = () => {
+	//! disini yang akan muncul
+		return (<div>Hello World</div>)
+	}
+	export default Hello;
+  
+
+Beberapa pengembang lebih memilih untuk menggunakan fungsi baru ES6 panah untuk menentukan komponen. [Arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) lebih kompak dan sintaks yang ringkas untuk menulis fungsi ekspresi.
+
+### Komponen kelas
+
+Komponen kelas menawarkan lebih banyak fitur, dan dengan lebih banyak fitur datang Bagasi. Alasan utama untuk memilih komponen kelas atas komponen fungsional adalah bahwa mereka dapat memiliki  `state`
+
+Komponen kelas bisa ada tanpa pegara juga. Berikut adalah contoh komponen kelas yang menerima input alat peraga dan menuliskan BEJ.
+
+
+    import React from 'react';
+    
+    class Hello extends React.Component {
+	    constructor(){
+		    super()
+		    this.state = {
+			    nama: 'Ardhi rahmaan'
+			}
+	    }
+	    render(){
+		    //! di bawah ini yang akan muncul
+		    return(<div>Hello {this.state.nama}</div>) // Hello Ardhi rahmaan
+	    }
+		}
+	}
+	export default Hello;
+
+Kita mendefinisikan sebuah metode konstruktor yang menerima alat peraga sebagai masukan. Dalam konstruktor, kita memanggil super() untuk mewariskan apa pun yang menjadi warisan dari parent class. Berikut adalah beberapa rincian yang Anda mungkin telah terjawab.
+
+Pertama, constructor opsional sedangkan menentukan komponen. Dalam kasus di atas, komponen yang tidak memiliki keadaan, dan konstruktor tidak muncul untuk melakukan sesuatu yang berguna.  `this.props` yang digunakan di dalam  `render()`  akan bekerja tanpa Apakah konstruktor didefinisikan atau tidak.
+
+## Pengertian DOM
+
+DOM adalah singkatan dari Document Object Model. Ia adalah suatu konsep atau cara logis untuk merepresentasikan struktur suatu dokumen dan bagaimana dokumen itu diakses serta dimodifikasi dalam bentuk pohon (tree).
+
+Dengan DOM, kita bisa mengakses, mengubah, mendelete suatu dokumen (atau tag) dalam HTML. Dan dalam dunia web, kita bisa melakukannya menggunakan Javascript dengan relatif mudah. Apalagi DOM selalu tersusun dalam bentuk tree, sehingga melakukan  _traversing_  antar  _nodes_  relatif mudah.
+
+Juga, pada masa kini DOM telah didukung oleh hampir semua platform (cross-platform) dan semua browser [2], lalu apa masalahnya dengan DOM sehingga kita akhir-akhir ini disuguhkan dengan teknologi baru bernama  **Virtual DOM**?
+
+## Kekurangan DOM
+
+DOM tidak pernah benar-benar diciptakan untuk UI yang dinamis.
+Mungkin kita bisa dengan mudah melakukan perubahan UI secara dinamis dengan library JS, salah satunya JQuery, namun apakah itu bisa kita lakukan untuk website sekala besar? Kita bisa lihat facebook, twitter, instagram, dan yang semisalnya. Maka akan kita temukan di sana banyak _nodes_ HTML yang saling berkaitan, dan tentu saja melakukan modifikasi pada _nodes_ sebanyak itu prosesnya ‘mahal’ alias membutuhkan _resource_ yg besar.
+
+Karena ketika DOM diupdate –dengan nodes yang super banyak–, browser perlu memperhitungkan ulang CSS, membentuk layout, kemudian menyusun ulang layout halaman web [4]. Oleh karena itu browser kita akan _freezing_ beberapa detik. Bayangkan jika ada 1000 div yang harus diubah, dan masing-masing div membutuhkan waktu 0.1 detik? Lumayan juga kan…
+
+Oleh karena itu bekerja dengan Real DOM sangat tidak efektif untuk projek-projek skala besar.
+
+## Virtual DOM
+
+Dari pada langsung bekerja dengan DOM secara langsung pada browser, pada virtual DOM kita terlebih dahulu membuat abstraksi DOM dalam bentuk virtual. Sehingga setiap perubahan terhadap struktur dokumen tidak terjadi secara langsung pada permukaan browser, akan tetapi terjadi di dalam memory. Sehingga proses menjadi lebih cepat.
+  
+![Ilustrasi Virtual DOM](https://jagongoding.com/storage/2017/September/apa-itu-virtual-dom/Virtual%20DOM.webp)
+
+Setelah modifikasi pada Virtual DOM selesai, kita lakukan proses _differing_ untuk membedakan antara struktur tree yang telah dirender sebelumnya pada browser dengan virtual tree yang sudah dibuat. Sehingga akan menghasilkan bagian-bagian yang ‘kotor’ alias berbeda. Dan **hanya bagian yang butuh diubah saja yang kita render ulang**.
+Proses ini tentu jauh lebih efektif dan lebih cepat dari pada jika kita harus bekerja secara langsung pada DOM yang asli.
